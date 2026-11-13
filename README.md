@@ -1,6 +1,6 @@
 # HimalayaIQ — Smart Nepal Trek Finder
 
-**Student:** Ankit Aryal 
+**Student:** Ankit Aryal   
 **Course:** CIS 3400 — Advanced Programming  
 **Project:** Project 2, Deliverable 1 — Proposal and Design  
 **Date:** November 16, 2026
