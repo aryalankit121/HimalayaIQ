@@ -1,185 +1,69 @@
-# CIS 3400 – Advanced Programming
-## Project 2: Python Application Development
+# HimalayaIQ — Smart Nepal Trek Finder
 
-**Student Name:** [Your Name]  
-**Project Title:** [Application Name]  
-**Course:** CIS 3400 – Advanced Programming  
-**Final Presentation:** December 8, 2026
+**Student:** Ankit Aryal 
+**Course:** CIS 3400 — Advanced Programming  
+**Project:** Project 2, Deliverable 1 — Proposal and Design  
+**Date:** November 16, 2026
 
----
+## 1. Problem and Intended Users
 
-## 1. Project Overview
+Nepal offers many trekking routes, but selecting an appropriate trek can be difficult, especially for travelers who are unfamiliar with the region. Treks vary in duration, cost, difficulty, altitude, and seasonal conditions. Travelers often need to compare information from several sources before making a decision.
 
-**Application Name:** [Name]
+**HimalayaIQ** is a proposed Python web application that helps users discover and compare trekking routes in Nepal based on their preferences. Its intended users are first-time visitors, beginner-to-intermediate trekkers, and anyone trying to choose a trek that fits their time, budget, experience, and interests.
 
-**Project Option:** [Predictive ML / Database-Enabled / AI-Powered Application]
+Unlike a static list of destinations, the application will **rank treks and explain why each recommendation matches the user's preferences**.
 
-### Problem Statement
-Describe the problem your application solves and why it is important. Write 3–5 sentences.
+## 2. Chosen Project Option
 
-### Intended Users
-Who will use your application? What will they accomplish with it?
+**Option 4 — API-Integrated Web Application.**
 
-### Unique Features
-Explain what makes your application different from classroom demonstrations or an existing application.
+HimalayaIQ will integrate an external weather API and use original Python logic to validate user inputs, filter trekking routes, calculate compatibility scores, and present personalized results. It will not require a trained machine learning model.
 
-## 2. Application Features
+## 3. Planned Features and Technologies
 
-- **Feature 1:** [Description]
-- **Feature 2:** [Description]
-- **Feature 3:** [Description]
-- **Feature 4 (optional):** [Description]
+**Planned features:**
+- **Preference form:** Users enter available days, budget, experience level, travel month, and preferred scenery or activities.
+- **Trek recommendations:** A custom Python scoring algorithm filters and ranks routes, with brief explanations of each match.
+- **Trek comparison:** Users compare estimated duration, cost, difficulty, maximum altitude, and highlights.
+- **Weather information:** Users view available forecasts for selected trek locations.
+- **Saved favorites (final version):** Users can save and revisit preferred routes.
 
-Explain how users interact with the application and what results they receive.
-
-## 3. Technologies Used
-
-List technologies **actually used** and explain their purposes. Remove unused examples.
+**Planned technologies:**
 
 | Technology | Purpose |
 |---|---|
-| Python | Main programming language |
-| Flask / Streamlit | Web interface and application framework, if used |
-| Pandas / NumPy | Data processing, if used |
-| scikit-learn / Hugging Face | Machine learning or AI, if used |
-| SQLite / MongoDB | Data storage, if used |
-| External APIs | External data or AI services, if used |
-| Other libraries | [Purpose] |
+| Python | Validation, filtering, scoring, and comparison logic |
+| Streamlit | Interactive web interface |
+| SQLite (`sqlite3`) | Store curated trek records and saved favorites |
+| `requests` | Retrieve weather forecasts from Open-Meteo |
+| `pandas` | Organize and compare trekking data |
+| `pytest` | Test recommendation logic and edge cases |
 
-## 4. Application Architecture
+**Development milestones:** By **November 23**, the goal is a working preference form, recommendations for 2–3 routes, and one weather API integration. By **December 8**, the target is 5–6 routes, improved comparisons, saved favorites, testing, and documentation. A detailed daily itinerary planner is a possible future addition, **not** part of the initial scope.
 
-Insert a labeled diagram showing user input → interface → Python processing (functions/classes) → model, database, API, or external service → output and/or stored results. Identify which components you develop and how data moves.
+## 4. Data / Model / API Plan
 
-![Application architecture](docs/architecture.png)
+I will create a small, curated dataset of Nepal treks, starting with routes such as Langtang Valley, Mardi Himal, and Annapurna Base Camp. Each record will include its name, region, typical duration, difficulty, approximate cost range, maximum altitude, suitable seasons, location coordinates, and highlights. Route details and cost estimates will be researched and documented; estimates will be labeled as approximate.
 
-*Replace the image above with your own diagram saved at `docs/architecture.png`, or change the path to your diagram.*
+The **recommendation engine will be rule-based, not a trained ML model**. It will first identify routes that fit key constraints, then calculate weighted scores using duration, budget, seasonal fit, and interests. Experience mismatches will be flagged rather than treated as proof that a trek is safe or unsafe.
 
-### How the Application Works
+The **Open-Meteo API** will provide forecast data for selected route locations. The app will handle unavailable forecasts and API errors gracefully. Forecasts are informational and do not replace local trail or safety guidance.
 
-1. The user enters or selects information.
-2. The interface passes the information to Python.
-3. Python functions or classes process the information.
-4. The application interacts with the model, database, or API, as applicable.
-5. Results are returned and displayed to the user.
-6. Data is saved or updated, if applicable.
+**Proposed data flow:** User preferences → Streamlit interface → Python validation and scoring → SQLite trek records + Open-Meteo weather data → ranked results and comparisons. Favorites will be stored in SQLite.
 
-Modify these steps to match your actual application.
+![Proposed application architecture](docs/architecture.png)
 
-## 5. Project Structure
+## 5. Preliminary Interface Sketch
 
-Replace this example with your **actual** folders and files:
+The interface will have a **preference form on the left** and **ranked trek results on the right**. Selecting a trek will reveal its main facts, comparison details, and available weather forecast. This is a proposed design, not a screenshot of a working application.
 
-```text
-project2/
-├── app.py
-├── model/
-│   └── student_model.joblib
-├── notebooks/
-│   └── model_training.ipynb
-├── data/
-│   └── sample_data.csv
-├── docs/
-│   └── architecture.png
-├── requirements.txt
-└── README.md
-```
+![Preliminary HimalayaIQ interface sketch](docs/interface-sketch.png)
 
-Describe the purpose of your important files. Remove files that are not used.
+## 6. Anticipated Challenges
 
-## 6. Installation and Running the Application
+- **Reliable trekking data:** Route durations, costs, and requirements vary. I will start with a limited number of researched routes and clearly label estimates.
+- **Useful recommendation scores:** A simple algorithm may rank treks poorly. I will test different user profiles, review the results, and explain the factors behind each score.
+- **Weather limitations:** Forecasts may be unavailable for distant dates or unreliable at high elevations. I will handle API failures and show clear forecast limitations.
+- **Time management:** Building too many features could prevent a working prototype. I will prioritize the recommendation engine and weather integration before favorites or visual polish.
 
-Provide instructions so another student or your professor can run the project.
-
-### Step 1: Clone the repository
-
-```bash
-git clone [repository-url]
-cd [repository-folder]
-```
-
-### Step 2: Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Step 3: Run the application
-
-For Streamlit:
-
-```bash
-streamlit run app.py
-```
-
-For Flask (if configured to start from `app.py`):
-
-```bash
-python app.py
-```
-
-Replace these examples with the correct commands for your project. Explain database setup, environment variables, model files, or API configuration if needed. **Never commit passwords, API keys, or other secrets.**
-
-## 7. Testing and Validation
-
-| Test | Expected Result | Actual Result |
-|---|---|---|
-| Normal user input | Application processes input | [Result] |
-| Invalid or missing input | Helpful error message | [Result] |
-| Model/database/API interaction | Correct response | [Result] |
-| Additional feature | Feature works correctly | [Result] |
-
-Describe known limitations or unresolved problems.
-
-## 8. AI-Assisted Development Disclosure
-
-**AI Tools Used:** [ChatGPT, GitHub Copilot, Claude, etc., or None]
-
-### How AI Was Used
-
-Describe AI assistance with design, coding, debugging, testing, documentation, or other tasks. Be specific.
-
-### Student Contributions
-
-Explain the work you personally completed, including design decisions, code modifications, integration, testing, and debugging.
-
-**Student statement:** I reviewed, tested, and can explain the code and technologies used in my application, including code developed with AI assistance.
-
-## 9. Challenges and Lessons Learned
-
-**Challenge 1:** [Description and solution]
-
-**Challenge 2:** [Description and solution]
-
-What new Python programming skills or technologies did you learn?
-
-## 10. Application Screenshots
-
-Include at least two screenshots with captions:
-
-1. Main application interface
-2. Application showing a working feature or result
-
-Add screenshots to a folder such as `docs/` and embed them here, for example:
-
-```markdown
-![Main application interface](docs/main-screen.png)
-```
-
-## 11. Project Links
-
-**GitHub Repository:** [URL]  
-**Deployed Application:** [URL, if applicable]  
-**Demonstration Video:** [URL, if applicable]
-
-## 12. Future Improvements
-
-1. [Improvement]
-2. [Improvement]
-
----
-
-### Documentation Timeline
-
-- **Deliverable 1 – November 16:** Complete the project overview, planned features, proposed technologies, preliminary architecture diagram, and planned project structure. These are planning sections and may change as development progresses.
-- **Deliverable 2 – November 23:** Update the README to reflect implementation progress and initial testing.
-- **Final Deliverable – December 8:** Complete all sections, verify setup instructions, add screenshots, and provide final links.
+**Current status:** Deliverable 1 is a proposal and design. Implementation and testing are planned for Deliverables 2 and 3.
