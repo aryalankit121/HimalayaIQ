@@ -41,6 +41,12 @@ except (OSError,sqlite3.Error):
     saved=[]
     st.warning("Favorites are temporarily unavailable. You can still explore and compare routes.")
 credits=image_credits()
+# Keep input widgets alive when their view is not rendered. Button state is excluded.
+retained_keys = {"days", "budget", "experience", "month", "interests", "comparison",
+                 "budget_trek", "weather_trek"}
+for key in list(st.session_state):
+    if key in retained_keys or key.startswith(("package_", "extras_days_", "estimate_")):
+        st.session_state[key] = st.session_state[key]
 page=st.radio("Plan your journey",["Explore","Favorites","Compare","Budget","Weather"],horizontal=True,key="navigation",label_visibility="collapsed")
 if page=="Explore": explore(treks,credits,saved)
 elif page=="Favorites": favorites_view(treks,credits,saved)

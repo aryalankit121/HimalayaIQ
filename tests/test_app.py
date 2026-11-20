@@ -37,6 +37,8 @@ def test_questionnaire_results_and_no_match():
     submit(app)
     assert not app.exception
     assert len(app.metric)==5
+    scores = [float(metric.value) for metric in app.metric]
+    assert scores == sorted(scores, reverse=True)
     assert len(app.warning)==4
     app.number_input(key='days').set_value(7)
     submit(app)
@@ -92,3 +94,25 @@ def test_weather_success_and_route_switch(monkeypatch):
     assert any('Missing values' in e.value for e in app.info)
     app.selectbox(key='weather_trek').set_value('langtang-valley').run()
     assert len(app.dataframe)==0  # Never show another route's cached weather.
+
+
+def test_navigation_retains_preference_and_budget_inputs():
+    app=app_test()
+    app.number_input(key='days').set_value(16)
+    submit(app)
+    app.radio(key='navigation').set_value('Budget').run()
+    app.number_input(key='estimate_daily').set_value(25.0).run()
+    app.radio(key='navigation').set_value('Explore').run()
+    assert app.number_input(key='days').value==16
+    app.radio(key='navigation').set_value('Budget').run()
+    assert app.number_input(key='estimate_daily').value==25.0
+    assert not app.exception
+
+
+def test_cleared_numeric_input_has_readable_validation():
+    app=app_test()
+    submit(app)
+    app.number_input(key='days').set_value(None)
+    submit(app)
+    assert not app.exception
+    assert any('Available days' in e.value for e in app.error)

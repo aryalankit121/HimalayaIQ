@@ -74,3 +74,8 @@ def test_increasing_resources_never_reduces_score():
     low = {r.trek.id: r.score for r in recommend(treks, profile(days=10, budget=900)).matches}
     high = {r.trek.id: r.score for r in recommend(treks, profile(days=14, budget=1300)).matches}
     assert all(high[key] >= value for key, value in low.items())
+
+
+def test_large_finite_weights_do_not_overflow():
+    result = recommend(read_seed(), profile(), dict.fromkeys(DEFAULT_WEIGHTS, 1e308))
+    assert all(r.score == pytest.approx(100) for r in result.matches)

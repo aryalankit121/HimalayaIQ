@@ -1,6 +1,7 @@
 """Load reviewed JSON into SQLite; seed edits refresh the cache transactionally."""
 
 from dataclasses import asdict
+from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -30,7 +31,7 @@ def load_treks(db_path: Path = DB_PATH, seed_path: Path = SEED_PATH) -> list[Tre
     treks = read_seed(seed_path)
     digest = hashlib.sha256(seed_path.read_bytes()).hexdigest()
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(db_path) as connection:
+    with closing(sqlite3.connect(db_path)) as connection, connection:
         connection.execute("CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value TEXT)")
         connection.execute("CREATE TABLE IF NOT EXISTS treks (id TEXT PRIMARY KEY, data TEXT NOT NULL)")
         stored = connection.execute("SELECT value FROM metadata WHERE key = 'seed_hash'").fetchone()

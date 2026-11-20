@@ -34,7 +34,7 @@ def experience_warnings(preferences: Preferences, trek: Trek) -> list[str]:
     """Warnings do not depend on weights or the aggregate score."""
     if EXPERIENCE_LEVELS.index(preferences.experience) < EXPERIENCE_LEVELS.index(trek.experience):
         return [f"Experience mismatch: you selected {preferences.experience}; our editorial "
-                f"profile suggests {trek.experience} experience. Review the route demands with "
+                f"profile suggests the {trek.experience} level. Review the route demands with "
                 "a qualified local guide. Compatibility does not establish trekking safety."]
     return []
 
@@ -49,9 +49,12 @@ def recommend(treks: list[Trek], preferences: Preferences,
         raise ValueError("Weights must contain all five factors with finite, nonnegative values.")
     if not preferences.interests:
         active["Interests"] = 0.0
-    total = sum(active.values())
-    if total <= 0:
+    largest = max(active.values())
+    if largest <= 0:
         raise ValueError("At least one active scoring weight must be positive.")
+    # Scale before summing so large finite custom weights cannot overflow.
+    active = {key: value / largest for key, value in active.items()}
+    total = sum(active.values())
     active = {key: value / total for key, value in active.items()}
     matches, excluded = [], {}
     for trek in treks:

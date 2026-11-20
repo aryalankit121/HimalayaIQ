@@ -17,6 +17,11 @@ from .recommender import DEFAULT_WEIGHTS, recommend
 from .weather import WeatherError, fetch_forecast
 
 
+def initial_value(key, default):
+    """Let retained session state own a widget value after its first render."""
+    return None if key in st.session_state else default
+
+
 def photo(trek, credits, hero=False):
     path = photo_path(trek.id, credits)
     if path is None:
@@ -95,16 +100,16 @@ def explore(treks, credits, saved):
     with left:
         st.subheader("Find your trail")
         with st.form("preferences"):
-            days = st.number_input("Available days in Nepal", 1, 60, 14, key="days", help=DURATION_NOTE)
-            budget = st.number_input("Package budget · USD / person", 1, 50000, 1200, step=50, key="budget", help=BUDGET_NOTE)
-            experience = st.selectbox("Trekking experience", EXPERIENCE_LEVELS, key="experience")
-            month = st.selectbox("Travel month", range(1,13), index=9, format_func=lambda m: calendar.month_name[m], key="month")
+            days = st.number_input("Available days in Nepal", 1, 60, initial_value("days",14), key="days", help=DURATION_NOTE)
+            budget = st.number_input("Package budget · USD / person", 1, 50000, initial_value("budget",1200), step=50, key="budget", help=BUDGET_NOTE)
+            experience = st.selectbox("Trekking experience", EXPERIENCE_LEVELS, index=initial_value("experience",0), key="experience")
+            month = st.selectbox("Travel month", range(1,13), index=initial_value("month",9), format_func=lambda m: calendar.month_name[m], key="month")
             interests = st.multiselect("What draws you to the trail?", INTERESTS,
-                                       default=["Mountain views", "Local culture"], key="interests")
+                                       default=initial_value("interests",["Mountain views", "Local culture"]), key="interests")
             submitted = st.form_submit_button("Find my treks", type="primary", width="stretch")
         if submitted:
             try:
-                preferences = Preferences(int(days), float(budget), experience, int(month), tuple(interests))
+                preferences = Preferences(days, budget, experience, month, tuple(interests))
                 recommend(treks, preferences)
                 st.session_state["submitted_preferences"] = preferences
             except ValueError as error:
@@ -133,10 +138,14 @@ def explore(treks, credits, saved):
                 with st.expander("Outside your time or budget", expanded=not items):
                     for name, reasons in report.excluded.items():
                         st.write(f"{name}: {' '.join(reasons)}")
-        columns = st.columns(2)
-        for index,(trek,result) in enumerate(items):
-            with columns[index % 2]:
-                trek_card(trek,credits,saved,"explore_"+trek.id,result)
+        # Build rows rather than long columns so stacked mobile cards keep rank order.
+        for start in range(0, len(items), 2):
+            columns = st.columns(2)
+            for offset, (trek, result) in enumerate(items[start:start + 2]):
+                with columns[offset]:
+                    if result:
+                        st.caption(f"MATCH {start + offset + 1:02d}")
+                    trek_card(trek, credits, saved, "explore_" + trek.id, result)
 
 
 def favorites_view(treks, credits, saved):
@@ -163,7 +172,7 @@ def favorites_view(treks, credits, saved):
 def compare_view(treks, credits):
     st.subheader("Different trails, side by side")
     by_id = {t.id:t for t in treks}
-    ids = st.multiselect("Compare up to four treks", list(by_id), default=list(by_id)[:2],
+    ids = st.multiselect("Compare up to four treks", list(by_id), default=initial_value("comparison",list(by_id)[:2]),
                          format_func=lambda key: by_id[key].name, max_selections=4, key="comparison")
     chosen = [by_id[key] for key in ids]
     if not chosen:
@@ -175,7 +184,7 @@ def compare_view(treks, credits):
             photo(trek,credits)
             st.markdown("**"+trek.name+"**")
     frame = pd.DataFrame(comparison_rows(chosen))
-    st.dataframe(frame.set_index("Trek").T, width="stretch")
+    st.dataframe(frame.set_index("Trek").astype(str).T, width="stretch")
     st.download_button("Download comparison CSV", frame.to_csv(index=False).encode("utf-8-sig"),
                        file_name="himalayaiq-comparison.csv", mime="text/csv")
     st.bar_chart(pd.DataFrame({"Trek":[t.name for t in chosen],"Approx. maximum altitude (m)": [t.max_altitude_m for t in chosen]}).set_index("Trek"),color="#18796e")
@@ -188,26 +197,29 @@ def budget_view(treks):
     st.subheader("Plan beyond the package")
     st.write("Build an editable USD-per-person scenario. These are your assumptions, not current market quotes.")
     by_id={t.id:t for t in treks}
-    route_id=st.selectbox("Budget for a trek",list(by_id),format_func=lambda key:by_id[key].name,key="budget_trek")
+    route_id=st.selectbox("Budget for a trek",list(by_id),index=initial_value("budget_trek",0),format_func=lambda key:by_id[key].name,key="budget_trek")
+    if route_id is None:
+        st.info("Choose a trek to estimate its budget.")
+        return
     trek=by_id[route_id]
     st.text(trek.cost_note)
     st.caption("Package price starts at the upper listed tier for planning. Extras start at zero because we cannot know your flights, insurance or spending. Enter them before treating this as a trip estimate.")
     a,b,c=st.columns(3)
     with a:
-        package=st.number_input("Package price / person",0.0,100000.0,float(trek.cost_max),step=10.0,key="package_"+route_id)
-        days=st.number_input("Days for daily extras",1,60,trek.days_min,key="extras_days_"+route_id)
-        daily=st.number_input("Daily extras / person",0.0,100000.0,0.0,step=5.0)
-        flights=st.number_input("International flights / person",0.0,100000.0,0.0,step=50.0)
+        package=st.number_input("Package price / person",0.0,100000.0,initial_value("package_"+route_id,float(trek.cost_max)),step=10.0,key="package_"+route_id)
+        days=st.number_input("Days for daily extras",1,60,initial_value("extras_days_"+route_id,trek.days_min),key="extras_days_"+route_id)
+        daily=st.number_input("Daily extras / person",0.0,100000.0,initial_value("estimate_daily",0.0),step=5.0,key="estimate_daily")
+        flights=st.number_input("International flights / person",0.0,100000.0,initial_value("estimate_flights",0.0),step=50.0,key="estimate_flights")
     with b:
-        visa=st.number_input("Visa / person",0.0,100000.0,0.0)
-        insurance=st.number_input("Insurance / person",0.0,100000.0,0.0)
-        equipment=st.number_input("Equipment / person",0.0,100000.0,0.0)
-        tips=st.number_input("Tips / person",0.0,100000.0,0.0)
+        visa=st.number_input("Visa / person",0.0,100000.0,initial_value("estimate_visa",0.0),key="estimate_visa")
+        insurance=st.number_input("Insurance / person",0.0,100000.0,initial_value("estimate_insurance",0.0),key="estimate_insurance")
+        equipment=st.number_input("Equipment / person",0.0,100000.0,initial_value("estimate_equipment",0.0),key="estimate_equipment")
+        tips=st.number_input("Tips / person",0.0,100000.0,initial_value("estimate_tips",0.0),key="estimate_tips")
     with c:
-        nights=st.number_input("Extra nights",0,60,0)
-        nightly=st.number_input("Extra night cost / person",0.0,100000.0,0.0)
-        contingency=st.number_input("Contingency (%)",0.0,100.0,0.0)
-        travelers=st.number_input("Travelers",1,50,1)
+        nights=st.number_input("Extra nights",0,60,initial_value("estimate_nights",0),key="estimate_nights")
+        nightly=st.number_input("Extra night cost / person",0.0,100000.0,initial_value("estimate_nightly",0.0),key="estimate_nightly")
+        contingency=st.number_input("Contingency (%)",0.0,100.0,initial_value("estimate_contingency",0.0),key="estimate_contingency")
+        travelers=st.number_input("Travelers",1,50,initial_value("estimate_travelers",1),key="estimate_travelers")
     try:
         estimate=estimate_budget(BudgetAssumptions(package,days,daily,flights,visa,insurance,equipment,tips,nights,nightly,contingency,travelers))
     except ValueError as error:
@@ -229,7 +241,10 @@ def cached_forecast(latitude,longitude):
 def weather_view(treks):
     st.subheader("Weather, with its place in context")
     by_id={t.id:t for t in treks}
-    selected=st.selectbox("Choose a route's weather location",list(by_id),format_func=lambda key:by_id[key].name,key="weather_trek")
+    selected=st.selectbox("Choose a route's weather location",list(by_id),index=initial_value("weather_trek",0),format_func=lambda key:by_id[key].name,key="weather_trek")
+    if selected is None:
+        st.info("Choose a route to view its weather location.")
+        return
     trek=by_id[selected]
     st.write(trek.weather_location)
     st.caption("Upcoming three days in Nepal time, independent of travel month. A settlement forecast does not describe the entire trail, a pass or a summit.")

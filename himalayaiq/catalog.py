@@ -19,7 +19,15 @@ def comparison_rows(treks: list[Trek]) -> list[dict]:
 
 def image_credits(path: Path = ROOT / "assets" / "image-credits.json") -> dict:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        records = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(records, dict):
+            return {}
+        required = ("file", "caption", "author", "license", "license_url", "source_url")
+        return {key: record for key, record in records.items()
+                if isinstance(record, dict) and all(isinstance(record.get(field), str)
+                and record[field] for field in required)
+                and record["license_url"].startswith("https://")
+                and record["source_url"].startswith("https://")}
     except (OSError, ValueError):
         return {}
 

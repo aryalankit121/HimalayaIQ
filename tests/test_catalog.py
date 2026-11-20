@@ -50,6 +50,14 @@ def test_missing_corrupt_and_escaping_photo_fallback(tmp_path):
     assert image_credits(tmp_path/'missing.json') == {}
 
 
+def test_incomplete_image_manifest_is_safe(tmp_path):
+    manifest=tmp_path/'credits.json'
+    manifest.write_text('{"route": {"file": "assets/photo.jpg"}}')
+    assert image_credits(manifest)=={}
+    manifest.write_text('[]')
+    assert image_credits(manifest)=={}
+
+
 @pytest.mark.parametrize('point',[{'place':'X','altitude_m':-1},{'place':'X','altitude_m':float('nan')},{'place':'','altitude_m':1000}])
 def test_invalid_elevation_points(point):
     with pytest.raises(ValueError):

@@ -1,6 +1,6 @@
 """Device-local favorites. Additive schema; no changes to existing trek tables."""
 
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from pathlib import Path
 import sqlite3
 
@@ -10,7 +10,7 @@ from .database import DB_PATH
 @contextmanager
 def favorites_connection(db_path: Path):
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(db_path, timeout=10) as connection:
+    with closing(sqlite3.connect(db_path, timeout=10)) as connection, connection:
         connection.execute("""CREATE TABLE IF NOT EXISTS favorites (
             trek_id TEXT PRIMARY KEY, saved_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         )""")
