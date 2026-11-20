@@ -33,6 +33,17 @@ def validate_trek(trek: Trek) -> None:
                  "itinerary_note", "cost_note", "weather_location"):
         if not isinstance(getattr(trek, name), str) or not getattr(trek, name).strip():
             raise ValueError(f"Missing trek field: {name}")
+    for name in ("cultural_highlights", "considerations"):
+        values = getattr(trek, name)
+        if not isinstance(values, list) or any(not isinstance(value, str) or not value.strip() for value in values):
+            raise ValueError(f"Invalid {name}: {trek.name}")
+    if not isinstance(trek.elevation_points, list):
+        raise ValueError(f"Invalid elevation points: {trek.name}")
+    for point in trek.elevation_points:
+        if (not isinstance(point, dict) or not isinstance(point.get("place"), str)
+                or not point["place"].strip() or not finite_number(point.get("altitude_m"))
+                or not 0 < point["altitude_m"] < 9000):
+            raise ValueError(f"Invalid elevation point: {trek.name}")
     if not (type(trek.days_min) is int and type(trek.days_max) is int
             and 1 <= trek.days_min <= trek.days_max <= 60):
         raise ValueError(f"Invalid duration: {trek.name}")

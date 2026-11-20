@@ -10,8 +10,8 @@ def test_seed_idempotence_and_refresh(tmp_path):
     seed = tmp_path / "treks.json"
     seed.write_bytes(SEED_PATH.read_bytes())
     db = tmp_path / "treks.sqlite3"
-    assert len(load_treks(db, seed)) == 3
-    assert len(load_treks(db, seed)) == 3
+    assert len(load_treks(db, seed)) == 6
+    assert len(load_treks(db, seed)) == 6
     records = json.loads(seed.read_text())
     records[0]["cost_max"] = 1100
     seed.write_text(json.dumps(records))
@@ -21,7 +21,7 @@ def test_seed_idempotence_and_refresh(tmp_path):
     with pytest.raises(ValueError):
         load_treks(db, seed)
     with sqlite3.connect(db) as connection:
-        assert connection.execute("SELECT COUNT(*) FROM treks").fetchone()[0] == 3
+        assert connection.execute("SELECT COUNT(*) FROM treks").fetchone()[0] == 6
 
 
 def test_duplicate_id_rejected(tmp_path):

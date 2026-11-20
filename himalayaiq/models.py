@@ -37,6 +37,9 @@ class Trek:
     latitude: float
     longitude: float
     sources: list[dict[str, str]]
+    cultural_highlights: list[str] = field(default_factory=list)
+    considerations: list[str] = field(default_factory=list)
+    elevation_points: list[dict] = field(default_factory=list)
 
 
 @dataclass

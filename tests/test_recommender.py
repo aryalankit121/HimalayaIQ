@@ -2,9 +2,15 @@ from dataclasses import replace
 
 import pytest
 
-from himalayaiq.database import read_seed
+from himalayaiq.database import read_seed as read_full_seed
 from himalayaiq.models import Preferences
 from himalayaiq.recommender import DEFAULT_WEIGHTS, range_compatibility, recommend
+
+
+def read_seed():
+    """Retain the original three-route regression scenarios as the catalog grows."""
+    original_ids = {"langtang-valley", "mardi-himal", "annapurna-base-camp"}
+    return [trek for trek in read_full_seed() if trek.id in original_ids]
 
 
 def profile(**changes):

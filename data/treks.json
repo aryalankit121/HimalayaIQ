@@ -11,8 +11,21 @@
     "experience": "Intermediate",
     "max_altitude_m": 4985,
     "altitude_note": "Approximate source maximum includes the optional Tserko Ri hike; not the overnight altitude. Route alternatives differ.",
-    "preferred_months": [3, 4, 5, 9, 10, 11, 12],
-    "interests": ["Mountain views", "Local culture", "Forests", "Monasteries"],
+    "preferred_months": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11,
+      12
+    ],
+    "interests": [
+      "Mountain views",
+      "Local culture",
+      "Forests",
+      "Monasteries"
+    ],
     "summary": "A valley journey through Tamang communities toward Kyanjin Gompa.",
     "itinerary_note": "10-day arrival-to-departure package, including Kathmandu transfers and road travel to/from the trek.",
     "cost_note": "Approximate operator range: $750 for 9–12 people through $1,070 solo; 2–5 people $890. Includes up to three daily teas/coffees on trek.",
@@ -32,6 +45,28 @@
         "accessed": "2026-11-19",
         "supports": "Verified coordinates for Dhunche in Rasuwa, Nepal, rather than another settlement with the same name."
       }
+    ],
+    "cultural_highlights": [
+      "Tamang communities in Langtang",
+      "Kyanjin Gompa monastery"
+    ],
+    "considerations": [
+      "Viewpoint hikes are alternatives, not a required sequence.",
+      "The source varies between 3,830 and 3,870 m for Kyanjin; the chart uses its overview value."
+    ],
+    "elevation_points": [
+      {
+        "place": "Kyanjin Gompa (source overview)",
+        "altitude_m": 3870
+      },
+      {
+        "place": "Kyanjin Ri (optional)",
+        "altitude_m": 4773
+      },
+      {
+        "place": "Tserko Ri (alternative)",
+        "altitude_m": 4985
+      }
     ]
   },
   {
@@ -46,8 +81,19 @@
     "experience": "Intermediate",
     "max_altitude_m": 4200,
     "altitude_note": "Approximate Upper Viewpoint altitude in this itinerary; this is not the higher Mardi Himal Base Camp variant.",
-    "preferred_months": [3, 4, 5, 9, 10, 11, 12],
-    "interests": ["Mountain views", "Forests"],
+    "preferred_months": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11,
+      12
+    ],
+    "interests": [
+      "Mountain views",
+      "Forests"
+    ],
     "summary": "Forest paths open onto a ridge facing Machhapuchhre and the Annapurna mountains.",
     "itinerary_note": "9-day arrival-to-departure package including Kathmandu, Pokhara, road transfers and the Upper Viewpoint trek.",
     "cost_note": "Approximate operator range: $790 for 8–10 people through $950 solo; 2–4 people $850. Hot and cold drinks are extra.",
@@ -67,6 +113,26 @@
         "accessed": "2026-11-19",
         "supports": "Verified gateway-city coordinates; not a mountain forecast location."
       }
+    ],
+    "cultural_highlights": [
+      "Village paths through the Annapurna foothills"
+    ],
+    "considerations": [
+      "The curated route reaches the Upper Viewpoint, not the higher base camp."
+    ],
+    "elevation_points": [
+      {
+        "place": "Pitam Deurali",
+        "altitude_m": 2130
+      },
+      {
+        "place": "Forest Camp",
+        "altitude_m": 2600
+      },
+      {
+        "place": "Upper Viewpoint",
+        "altitude_m": 4200
+      }
     ]
   },
   {
@@ -81,8 +147,21 @@
     "experience": "Intermediate",
     "max_altitude_m": 4130,
     "altitude_note": "Approximate Annapurna Base Camp elevation for the selected itinerary.",
-    "preferred_months": [3, 4, 5, 9, 10, 11, 12],
-    "interests": ["Mountain views", "Local culture", "Forests", "Hot springs"],
+    "preferred_months": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11,
+      12
+    ],
+    "interests": [
+      "Mountain views",
+      "Local culture",
+      "Forests",
+      "Hot springs"
+    ],
     "summary": "A longer journey via Poon Hill into the Annapurna Sanctuary, returning via Jhinu.",
     "itinerary_note": "14-day arrival-to-departure package including Kathmandu, Pokhara, road transfers and Poon Hill.",
     "cost_note": "Approximate operator range: $990 for 8–12 people through $1,190 solo; 2–4 people $1,090. Higher lodges may use shared dormitories.",
@@ -101,6 +180,246 @@
         "url": "https://geocoding-api.open-meteo.com/v1/search?name=Pokhara&count=1",
         "accessed": "2026-11-19",
         "supports": "Verified gateway-city coordinates; not a mountain forecast location."
+      }
+    ],
+    "cultural_highlights": [
+      "Gurung and Magar villages",
+      "Jhinu Danda hot springs"
+    ],
+    "considerations": [
+      "Higher lodges may use dormitory rooms."
+    ],
+    "elevation_points": [
+      {
+        "place": "Chhomrong",
+        "altitude_m": 2170
+      },
+      {
+        "place": "Annapurna Base Camp",
+        "altitude_m": 4130
+      }
+    ]
+  },
+  {
+    "id": "poon-hill",
+    "name": "Ghorepani Poon Hill",
+    "region": "Annapurna",
+    "days_min": 8,
+    "days_max": 8,
+    "cost_min": 650,
+    "cost_max": 860,
+    "difficulty": "Easy to moderate",
+    "experience": "Beginner",
+    "max_altitude_m": 3210,
+    "altitude_note": "Approximate maximum for this selected itinerary, as reported by the linked operator.",
+    "preferred_months": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      9,
+      10,
+      11,
+      12
+    ],
+    "interests": [
+      "Mountain views",
+      "Local culture",
+      "Forests"
+    ],
+    "summary": "Rhododendron forests and Gurung and Magar villages beneath the Annapurna skyline.",
+    "itinerary_note": "8-day Kathmandu arrival-to-departure package, including listed transfers and city stays.",
+    "cost_note": "Approximate advertised group-tier range USD 650–860 per person. Confirm party-size pricing and inclusions.",
+    "weather_location": "Pokhara — gateway city, not Poon Hill",
+    "latitude": 28.26689,
+    "longitude": 83.96851,
+    "sources": [
+      {
+        "title": "Nepal Hiking Team — Ghorepani Poon Hill",
+        "url": "https://www.nepalhikingteam.com/package/annapurna-panorama-trek",
+        "accessed": "2026-11-20",
+        "supports": "Published itinerary duration, group prices, maximum and selected landmark elevations, difficulty, months and cultural highlights. Experience and interest tags are editorial."
+      },
+      {
+        "title": "Open-Meteo / GeoNames — Pokhara (ID 1282898)",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Pokhara&count=1&countryCode=NP",
+        "accessed": "2026-11-20",
+        "supports": "Verified settlement coordinates; not a whole-route forecast."
+      }
+    ],
+    "cultural_highlights": [
+      "Gurung and Magar communities along the route",
+      "Ghandruk village"
+    ],
+    "considerations": [
+      "Steep stone steps remain demanding despite the shorter itinerary.",
+      "Beginner is an editorial experience category, not a fitness or safety assessment."
+    ],
+    "elevation_points": [
+      {
+        "place": "Ulleri",
+        "altitude_m": 1960
+      },
+      {
+        "place": "Ghorepani",
+        "altitude_m": 2880
+      },
+      {
+        "place": "Poon Hill",
+        "altitude_m": 3210
+      },
+      {
+        "place": "Tadapani",
+        "altitude_m": 2630
+      }
+    ]
+  },
+  {
+    "id": "everest-base-camp",
+    "name": "Everest Base Camp",
+    "region": "Khumbu",
+    "days_min": 16,
+    "days_max": 16,
+    "cost_min": 1450,
+    "cost_max": 1595,
+    "difficulty": "Moderate (operator classification)",
+    "experience": "Experienced",
+    "max_altitude_m": 5545,
+    "altitude_note": "Approximate maximum for this selected itinerary, as reported by the linked operator.",
+    "preferred_months": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11,
+      12
+    ],
+    "interests": [
+      "Mountain views",
+      "Local culture",
+      "Monasteries"
+    ],
+    "summary": "A Khumbu journey through Sherpa settlements to the Nepal-side base camp.",
+    "itinerary_note": "16-day Kathmandu arrival-to-departure package, including listed transfers and city stays.",
+    "cost_note": "Approximate advertised group-tier range USD 1450–1595 per person. Confirm party-size pricing and inclusions. Published package includes scheduled Lukla flights; do not add them again in the estimator.",
+    "weather_location": "Namche Bazaar — settlement forecast, not Everest Base Camp or Kala Patthar",
+    "latitude": 27.80528,
+    "longitude": 86.71058,
+    "sources": [
+      {
+        "title": "Nepal Hiking Team — Everest Base Camp",
+        "url": "https://www.nepalhikingteam.com/package/everest-base-camp-trek",
+        "accessed": "2026-11-20",
+        "supports": "Published itinerary duration, group prices, maximum and selected landmark elevations, difficulty, months and cultural highlights. Experience and interest tags are editorial."
+      },
+      {
+        "title": "Open-Meteo / GeoNames — Namche Bazaar (ID 1283011)",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Namche%20Bazaar&count=1&countryCode=NP",
+        "accessed": "2026-11-20",
+        "supports": "Verified settlement coordinates; not a whole-route forecast."
+      }
+    ],
+    "cultural_highlights": [
+      "Sherpa settlements of the Khumbu",
+      "Tengboche Monastery"
+    ],
+    "considerations": [
+      "Lukla flights can be delayed; the published 16-day package includes a buffer day.",
+      "Maximum includes Kala Patthar; it is not Everest summit altitude.",
+      "Experienced is our editorial preference expectation for the sustained high-altitude itinerary."
+    ],
+    "elevation_points": [
+      {
+        "place": "Namche Bazaar",
+        "altitude_m": 3440
+      },
+      {
+        "place": "Gorak Shep",
+        "altitude_m": 5164
+      },
+      {
+        "place": "Everest Base Camp",
+        "altitude_m": 5364
+      },
+      {
+        "place": "Kala Patthar",
+        "altitude_m": 5545
+      }
+    ]
+  },
+  {
+    "id": "manaslu-circuit",
+    "name": "Manaslu Circuit",
+    "region": "Manaslu / Gorkha",
+    "days_min": 14,
+    "days_max": 14,
+    "cost_min": 1165,
+    "cost_max": 1380,
+    "difficulty": "Moderate to strenuous",
+    "experience": "Experienced",
+    "max_altitude_m": 5106,
+    "altitude_note": "Approximate maximum for this selected itinerary, as reported by the linked operator.",
+    "preferred_months": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11
+    ],
+    "interests": [
+      "Mountain views",
+      "Local culture",
+      "Forests",
+      "Monasteries"
+    ],
+    "summary": "Follow the Budi Gandaki valley through Samagaun toward Larkya La.",
+    "itinerary_note": "14-day Kathmandu arrival-to-departure package, including listed transfers and city stays.",
+    "cost_note": "Approximate advertised group-tier range USD 1165–1380 per person. Confirm party-size pricing and inclusions.",
+    "weather_location": "Kathmandu — arrival city only, not the Manaslu trail",
+    "latitude": 27.70169,
+    "longitude": 85.3206,
+    "sources": [
+      {
+        "title": "Nepal Hiking Team — Manaslu Circuit",
+        "url": "https://www.nepalhikingteam.com/package/manaslu-circuit-trek",
+        "accessed": "2026-11-20",
+        "supports": "Published itinerary duration, group prices, maximum and selected landmark elevations, difficulty, months and cultural highlights. Experience and interest tags are editorial."
+      },
+      {
+        "title": "Open-Meteo / GeoNames — Kathmandu (ID 1283240)",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Kathmandu&count=1&countryCode=NP",
+        "accessed": "2026-11-20",
+        "supports": "Verified settlement coordinates; not a whole-route forecast."
+      }
+    ],
+    "cultural_highlights": [
+      "Samagaun village and its monasteries",
+      "Nubri region"
+    ],
+    "considerations": [
+      "Remote lodges and a long pass-crossing day.",
+      "Confirm current restricted-area arrangements and group requirements with the operator.",
+      "Optional base-camp elevations differ within the source; they are excluded from this chart."
+    ],
+    "elevation_points": [
+      {
+        "place": "Samdo",
+        "altitude_m": 3875
+      },
+      {
+        "place": "Dharmasala",
+        "altitude_m": 4460
+      },
+      {
+        "place": "Larkya La",
+        "altitude_m": 5106
+      },
+      {
+        "place": "Goa",
+        "altitude_m": 2515
       }
     ]
   }
